@@ -1,4 +1,8 @@
 import { useState } from "react";
+import {
+  brandDisplayNames,
+  categoricalOptions,
+} from "../constants/categoricalOptions.js";
 
 const initialValues = {
   item_price: "",
@@ -45,11 +49,11 @@ function OrderForm({ onSubmit, isLoading }) {
 
     onSubmit({
       item_price: Number(values.item_price),
-      item_size: values.item_size.trim(),
-      item_color: values.item_color.trim(),
+      item_size: values.item_size,
+      item_color: values.item_color,
       brand_id: Number(values.brand_id),
-      user_title: values.user_title.trim(),
-      user_state: values.user_state.trim(),
+      user_title: values.user_title,
+      user_state: values.user_state,
       order_date: values.order_date,
       user_reg_date: values.user_reg_date,
       user_dob: values.user_dob || null,
@@ -88,43 +92,60 @@ function OrderForm({ onSubmit, isLoading }) {
           <label className="field">
             <span>
               Brand ID <span className="required-star">*</span>
+              <span className="optional-label">SYNTHETIC NAMES</span>
             </span>
-            <input
+            <select
               name="brand_id"
-              type="number"
-              min="0"
-              step="1"
-              placeholder="e.g. 1042"
               value={values.brand_id}
               onChange={updateValue}
               required
-            />
+            >
+              <option value="">Select a brand</option>
+              {categoricalOptions.brand_id.map((brandId) => (
+                <option key={brandId} value={brandId}>
+                  {brandDisplayNames[brandId]} · ID {brandId}
+                </option>
+              ))}
+            </select>
+            <span className="field-note">
+              Display aliases only; the model receives the numeric ID.
+            </span>
           </label>
           <label className="field">
             <span>
               Item size <span className="required-star">*</span>
             </span>
-            <input
+            <select
               name="item_size"
-              type="text"
-              placeholder="e.g. M, 8, One size"
               value={values.item_size}
               onChange={updateValue}
               required
-            />
+            >
+              <option value="">Select a size</option>
+              {categoricalOptions.item_size.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
           </label>
           <label className="field">
             <span>
               Item color <span className="required-star">*</span>
             </span>
-            <input
+            <select
               name="item_color"
-              type="text"
-              placeholder="e.g. Navy"
               value={values.item_color}
               onChange={updateValue}
               required
-            />
+            >
+              <option value="">Select a color</option>
+              {categoricalOptions.item_color.map((color) => (
+                <option key={color} value={color}>
+                  {color}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </fieldset>
@@ -138,27 +159,37 @@ function OrderForm({ onSubmit, isLoading }) {
             <span>
               Title <span className="required-star">*</span>
             </span>
-            <input
+            <select
               name="user_title"
-              type="text"
-              placeholder="e.g. Mrs"
               value={values.user_title}
               onChange={updateValue}
               required
-            />
+            >
+              <option value="">Select a title</option>
+              {categoricalOptions.user_title.map((title) => (
+                <option key={title} value={title}>
+                  {title}
+                </option>
+              ))}
+            </select>
           </label>
           <label className="field">
             <span>
               State <span className="required-star">*</span>
             </span>
-            <input
+            <select
               name="user_state"
-              type="text"
-              placeholder="e.g. CA"
               value={values.user_state}
               onChange={updateValue}
               required
-            />
+            >
+              <option value="">Select a state</option>
+              {categoricalOptions.user_state.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </fieldset>

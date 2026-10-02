@@ -8,10 +8,12 @@ import "./dashboard.css";
 
 function App() {
   const [prediction, setPrediction] = useState(null);
+  const [submittedOrder, setSubmittedOrder] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   async function handlePredict(order) {
+    setSubmittedOrder(order);
     setIsLoading(true);
     setError("");
     setPrediction(null);
@@ -95,7 +97,7 @@ function App() {
             {isLoading && <Loading />}
             {error && <ErrorMessage message={error} />}
             {prediction && !isLoading && (
-              <PredictionResult result={prediction} />
+              <PredictionResult result={prediction} order={submittedOrder} />
             )}
             {!prediction && !isLoading && !error && (
               <div className="empty-result">

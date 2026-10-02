@@ -1,8 +1,10 @@
+import OrderSummary from "./OrderSummary.jsx";
+
 function formatProbability(value) {
   return `${(value * 100).toFixed(2)}%`;
 }
 
-function PredictionResult({ result }) {
+function PredictionResult({ result, order }) {
   const isReturn = result.prediction === 1;
   const returnProbability = Number(result.return_probability);
   const noReturnProbability = Number(result.no_return_probability);
@@ -74,6 +76,7 @@ function PredictionResult({ result }) {
       <p className="result-model-note">
         Probabilities returned by the live prediction API.
       </p>
+      {order && <OrderSummary order={order} />}
     </div>
   );
 }
